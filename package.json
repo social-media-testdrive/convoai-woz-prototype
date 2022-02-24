@@ -1,12 +1,15 @@
 {
-  "name": "socket-chat-example",
+  "name": "convoai-woz-prototype",
   "version": "0.0.1",
-  "description": "my first socket.io app",
+  "description": "conversational ai wizard of oz prototype",
   "dependencies": {
     "express": "^4.17.1",
-    "socket.io": "^4.1.2"
+    "nodemon": "^2.0.15",
+    "pug": "^3.0.2",
+    "socket.io": "^4.4.1"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   }
 }

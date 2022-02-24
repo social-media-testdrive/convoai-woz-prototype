@@ -1,0 +1,31 @@
+-var cdn = "https://dhpd030vnpk29.cloudfront.net";
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='theme-color' content='#4DA5F4')
+    title #{title} - Social Media TestDrive
+    link(rel='shortcut icon', href=cdn+'/profile_pictures/convo_bot.png')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css', integrity='sha256-9mbkOfVho3ZPXfM7W8sV2SndrGDuh7wuyLjtsWeTI1Q=', crossorigin='anonymous')
+    link(rel='stylesheet', href=cdn+'/js/lib/introjs.min.css')
+    link(type='text/css', rel='stylesheet', href='header.css') 
+    link(type='text/css', rel='stylesheet', href='ui_layout.css') 
+    block styles
+
+  body
+    .ui.vertically.padded.grid.container.addBottomPaddingToGrid
+      include partials/ui_header
+      block content     
+    include partials/ui_footer
+
+    script(src=cdn+'/js/lib/jquery-3.1.1.min.js')
+    script(src=cdn+'/js/lib/humanized_time_span.js')
+    script(src=cdn+'/js/lib/lazyload.transpiled.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js', integrity="sha256-ZUdSt2scSiBqI3Tso+Al3lcqkBvgRShVrUc1pvvGGVE=" crossorigin="anonymous")
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js', integrity="sha256-v8vuH0gf888S01qYrvK2hDq/RfE2au7WOLbqlPzDwOQ=" crossorigin="anonymous")
+    script(src=cdn+'/js/lib/intro.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js', integrity='sha256-t8GepnyPmw9t+foMh3mKNvcorqNHamSKtKRxxpUEgFI=', crossorigin='anonymous')
+
+    block scripts 

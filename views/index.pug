@@ -1,0 +1,249 @@
+
+extends ui_layout
+
+block content
+  -var cdn = "https://dhpd030vnpk29.cloudfront.net";
+  .computer.only.tablet.only.four.wide.column 
+  #content.eight.wide.computer.ten.wide.tablet.sixteen.wide.mobile.column()       
+    //-####################### POST 1 ######################################
+    .ui.fluid.card.dim(postID="post1")
+      .ui.dimmer.flag
+        .content
+          .center
+            h2.ui.inverted.icon.header
+              i.red.flag.icon
+              | You&apos;ve flagged this!
+              h3.ui.inverted.header
+                span 
+                  | The admins will review this post further. We are sorry you 
+                  | had this experience.
+      .content
+        .right.floated.meta= "Yesterday"
+        a(href='#')
+              img.ui.avatar.image(src=cdn+'/profile_pictures/user55.jpg')
+              span='Lana Reed'
+      .img.post
+        img(src=cdn+'/post_pictures/calculator.jpg')
+      .content
+        .description Somebody help me with math
+      .three.ui.bottom.attached.icon.buttons
+        .ui.reply.button(tabindex='0')
+          i.reply.icon
+          | Reply
+        .ui.flag.button(tabindex='0')
+          i.flag.icon
+          | Flag
+        .ui.labeled.button(tabindex='0')
+          .ui.like.button
+            i.heart.icon
+            | Like
+          a.ui.basic.red.left.pointing.label.count 2
+      .content
+        .ui.comments
+          .comment
+            a.avatar
+              img(src=cdn+'/profile_pictures/user66.jpeg')
+            .content
+              a.author Emma Hanson
+              .metadata
+                span.date Yesterday
+                .rating
+                  i.heart.icon
+                  span.num 1
+                  |  Likes
+              .text 
+                | Seriously, you should drop out or repeat grade 7 if you can't 
+                | even deal with such an easy assignment.
+              .actions
+                a.like.comment Like
+                a.flag.comment Flag
+      .extra.content
+        .ui.fluid.left.labeled.right.icon.input
+          .ui.label
+            img.ui.avatar.image(src=cdn+'/profile_pictures/avatar-icon.svg')
+          input.newcomment#hint1(type='text' placeholder='Write a Comment')
+          i.big.send.link.icon
+    //-####################### POST 2 ######################################
+    .ui.fluid.card.dim(postID="post2")
+      .ui.dimmer.flag
+        .content
+          .center
+            h2.ui.inverted.icon.header
+              i.red.flag.icon
+              | You&apos;ve flagged this!
+              h3.ui.inverted.header
+                span 
+                  | The admins will review this post further. We are sorry you 
+                  | had this experience.
+      .content
+        .right.floated.meta= "Yesterday"
+        a(href='#')
+              img.ui.avatar.image(src=cdn+'/profile_pictures/user54.jpg')
+              span='Ariel Simon'
+      .img.post
+        img(src=cdn+'/post_pictures/class_schedule.png')
+      .content
+        .description Look at my class schedule this semester!
+      .three.ui.bottom.attached.icon.buttons
+        .ui.reply.button(tabindex='0')
+          i.reply.icon
+          | Reply
+        .ui.flag.button(tabindex='0')
+          i.flag.icon
+          | Flag
+        .ui.labeled.button(tabindex='0')
+          .ui.like.button
+            i.heart.icon
+            | Like
+          a.ui.basic.red.left.pointing.label.count 2
+      .content
+        .ui.comments
+          .comment
+            a.avatar
+              img(src=cdn+'/profile_pictures/user36.jpg')
+            .content
+              a.author Hayden Abbey
+              .metadata
+                span.date Yesterday
+                .rating
+                  i.heart.icon
+                  span.num 1
+                  |  Likes
+              .text omg i’m so scared of physics
+              .actions
+                a.like.comment Like
+                a.flag.comment Flag
+      .extra.content
+        .ui.fluid.left.labeled.right.icon.input
+          .ui.label
+            img.ui.avatar.image(src=cdn+'/profile_pictures/avatar-icon.svg')
+          input.newcomment(type='text' placeholder='Write a Comment')
+          i.big.send.link.icon
+    //-####################### POST 3 ######################################
+    .ui.fluid.card.dim(postID="post3")
+        .ui.dimmer.flag
+          .content
+            .center
+              h2.ui.inverted.icon.header
+                i.red.flag.icon
+                | You&apos;ve flagged this!
+                h3.ui.inverted.header
+                  span 
+                    | The admins will review this post further. We are sorry you 
+                    | had this experience.
+        .content
+          .right.floated.meta= "Yesterday"
+          a(href='#')
+                img.ui.avatar.image(src=cdn+'/profile_pictures/user66.jpeg')
+                span='Emma Hanson'
+        .img.post
+          img(src=cdn+'/post_pictures/loser.jpg')
+        .content
+          .description Lana is a LOSER!
+        .three.ui.bottom.attached.icon.buttons
+          .ui.reply.button(tabindex='0')
+            i.reply.icon
+            | Reply
+          .ui.flag.button(tabindex='0')#hint2
+            i.flag.icon
+            | Flag
+          .ui.labeled.button(tabindex='0')
+            .ui.like.button
+              i.heart.icon
+              | Like
+            a.ui.basic.red.left.pointing.label.count 2        
+        .extra.content
+          .ui.fluid.left.labeled.right.icon.input
+            .ui.label
+              img.ui.avatar.image(src=cdn+'/profile_pictures/avatar-icon.svg')
+            input.newcomment(type='text' placeholder='Write a Comment')
+            i.big.send.link.icon
+    //-####################### POST 4 ######################################
+    .ui.fluid.card.dim(postID="post4")
+      .ui.dimmer.flag
+        .content
+          .center
+            h2.ui.inverted.icon.header
+              i.red.flag.icon
+              | You&apos;ve flagged this!
+              h3.ui.inverted.header
+                span 
+                  | The admins will review this post further. We are sorry you 
+                  | had this experience.
+      .content
+        .right.floated.meta= "Yesterday"
+        a(href='#')
+              img.ui.avatar.image(src=cdn+'/profile_pictures/user44.png')
+              span='David Cole'
+      .img.post
+        img(src=cdn+'/post_pictures/blackbkg.jpg')
+      .content
+        .description 
+          | No one likes u sarah. Why do u come to school? @Sarah Stella
+      .three.ui.bottom.attached.icon.buttons
+        .ui.reply.button(tabindex='0')
+          i.reply.icon
+          | Reply
+        .ui.flag.button()
+          i.flag.icon
+          | Flag
+        .ui.labeled.button(tabindex='0')
+          .ui.like.button
+            i.heart.icon
+            | Like
+          a.ui.basic.red.left.pointing.label.count 2
+      .content
+        .ui.comments
+          .comment
+            a.avatar
+              img(src=cdn+'/profile_pictures/user43.jpg')
+            .content
+              a.author Susan Turner
+              .metadata
+                span.date Yesterday
+                .rating
+                  i.heart.icon
+                  span.num 1
+                  |  Likes
+              .text Lol it’s true ! I don’t want to see her at school anymore
+              .actions
+                a.like.comment Like
+                a.flag.comment Flag
+                a#hint3
+      .extra.content
+        .ui.fluid.left.labeled.right.icon.input
+          .ui.label
+            img.ui.avatar.image(src=cdn+'/profile_pictures/avatar-icon.svg')
+          input.newcomment#hint4(type='text' placeholder='Write a Comment')
+          i.big.send.link.icon
+
+  //-Mobile version of the notification popup
+  .ui.fixed.bottom.sticky.notificationPopup.hidden#mobilePopup(correspondingpost=0)
+      .ui.info.message#removeHiddenMobile
+        i.close.icon
+        .ui.feed
+         .event
+           .label
+             img.popupNotificationImage(src=cdn + '/profile_pictures/user39.jpg')
+           .content
+             .summary Thomas Rogers commented on Hannah Lee’s post: “I love ribs”.        
+
+  //-notification popup
+  .computer.only.tablet.only.two.wide.column 
+    .ui.fixed.bottom.sticky.notificationPopup#desktopPopup(correspondingpost=0)
+     .ui.info.message#removeHidden
+       i.close.icon
+       .ui.feed
+        .event
+          .label
+            img.popupNotificationImage(src=cdn + '/profile_pictures/user39.jpg')
+          .content
+            .summary Thomas Rogers commented on Hannah Lee’s post: “I love ribs”.
+
+block scripts
+  script(src='/socket.io/socket.io.js')
+  script(src='/postFunctionalities.js')
+    
+  //- script(src = "/module_js/base_sim.js")
+block styles
+  link(rel='stylesheet', href='/sim.css')
