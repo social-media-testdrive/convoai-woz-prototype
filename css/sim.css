@@ -35,4 +35,5 @@ img.popupNotificationImage {
   padding-left: 1em;
   padding-right: 1em;
   display: none;
+  cursor: pointer;
 }

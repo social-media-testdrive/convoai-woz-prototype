@@ -60,9 +60,10 @@ socket.on("post comment", function (msg) {
 
     clearTimeout(timeout);
     timeout = setTimeout(function () {
-        if ($("#removeHidden").is(':visible') || $("#removeHiddenMobile").is(':visible')) {
-            $("#removeHiddenMobile").transition("fade");
+        if ($("#removeHidden").is(':visible')) {
             $("#removeHidden").transition("fade");
+        } else if ($("#removeHiddenMobile").is(':visible')){
+            $("#removeHiddenMobile").transition("fade");
         }
     }, 5000);
 
