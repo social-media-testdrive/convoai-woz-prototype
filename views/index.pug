@@ -2,7 +2,6 @@
 extends ui_layout
 
 block content
-  -var cdn = "https://dhpd030vnpk29.cloudfront.net";
   .computer.only.tablet.only.four.wide.column 
   #content.eight.wide.computer.ten.wide.tablet.sixteen.wide.mobile.column()       
     //-####################### POST 1 ######################################
@@ -20,10 +19,10 @@ block content
       .content
         .right.floated.meta= "Yesterday"
         a(href='#')
-              img.ui.avatar.image(src=cdn+'/profile_pictures/user55.jpg')
+              img.ui.avatar.image(src='/profile_pictures/user55.jpg')
               span='Lana Reed'
       .img.post
-        img(src=cdn+'/post_pictures/calculator.jpg')
+        img(src='/post_pictures/calculator.jpg')
       .content
         .description Somebody help me with math
       .three.ui.bottom.attached.icon.buttons
@@ -42,7 +41,7 @@ block content
         .ui.comments
           .comment
             a.avatar
-              img(src=cdn+'/profile_pictures/user66.jpeg')
+              img(src='/profile_pictures/user66.jpeg')
             .content
               a.author Emma Hanson
               .metadata
@@ -60,7 +59,7 @@ block content
       .extra.content
         .ui.fluid.left.labeled.right.icon.input
           .ui.label
-            img.ui.avatar.image(src=cdn+'/profile_pictures/avatar-icon.svg')
+            img.ui.avatar.image(src='/profile_pictures/avatar-icon.svg')
           input.newcomment#hint1(type='text' placeholder='Write a Comment')
           i.big.send.link.icon
     //-####################### POST 2 ######################################
@@ -78,10 +77,10 @@ block content
       .content
         .right.floated.meta= "Yesterday"
         a(href='#')
-              img.ui.avatar.image(src=cdn+'/profile_pictures/user54.jpg')
+              img.ui.avatar.image(src='/profile_pictures/user54.jpg')
               span='Ariel Simon'
       .img.post
-        img(src=cdn+'/post_pictures/class_schedule.png')
+        img(src='/post_pictures/class_schedule.png')
       .content
         .description Look at my class schedule this semester!
       .three.ui.bottom.attached.icon.buttons
@@ -100,7 +99,7 @@ block content
         .ui.comments
           .comment
             a.avatar
-              img(src=cdn+'/profile_pictures/user36.jpg')
+              img(src='/profile_pictures/user36.jpg')
             .content
               a.author Hayden Abbey
               .metadata
@@ -116,7 +115,7 @@ block content
       .extra.content
         .ui.fluid.left.labeled.right.icon.input
           .ui.label
-            img.ui.avatar.image(src=cdn+'/profile_pictures/avatar-icon.svg')
+            img.ui.avatar.image(src='/profile_pictures/avatar-icon.svg')
           input.newcomment(type='text' placeholder='Write a Comment')
           i.big.send.link.icon
     //-####################### POST 3 ######################################
@@ -134,10 +133,10 @@ block content
         .content
           .right.floated.meta= "Yesterday"
           a(href='#')
-                img.ui.avatar.image(src=cdn+'/profile_pictures/user66.jpeg')
+                img.ui.avatar.image(src='/profile_pictures/user66.jpeg')
                 span='Emma Hanson'
         .img.post
-          img(src=cdn+'/post_pictures/loser.jpg')
+          img(src='/post_pictures/loser.jpg')
         .content
           .description Lana is a LOSER!
         .three.ui.bottom.attached.icon.buttons
@@ -155,7 +154,7 @@ block content
         .extra.content
           .ui.fluid.left.labeled.right.icon.input
             .ui.label
-              img.ui.avatar.image(src=cdn+'/profile_pictures/avatar-icon.svg')
+              img.ui.avatar.image(src='/profile_pictures/avatar-icon.svg')
             input.newcomment(type='text' placeholder='Write a Comment')
             i.big.send.link.icon
     //-####################### POST 4 ######################################
@@ -173,10 +172,10 @@ block content
       .content
         .right.floated.meta= "Yesterday"
         a(href='#')
-              img.ui.avatar.image(src=cdn+'/profile_pictures/user44.png')
+              img.ui.avatar.image(src='/profile_pictures/user44.png')
               span='David Cole'
       .img.post
-        img(src=cdn+'/post_pictures/blackbkg.jpg')
+        img(src='/post_pictures/blackbkg.jpg')
       .content
         .description 
           | No one likes u sarah. Why do u come to school? @Sarah Stella
@@ -196,7 +195,7 @@ block content
         .ui.comments
           .comment
             a.avatar
-              img(src=cdn+'/profile_pictures/user43.jpg')
+              img(src='/profile_pictures/user43.jpg')
             .content
               a.author Susan Turner
               .metadata
@@ -213,7 +212,7 @@ block content
       .extra.content
         .ui.fluid.left.labeled.right.icon.input
           .ui.label
-            img.ui.avatar.image(src=cdn+'/profile_pictures/avatar-icon.svg')
+            img.ui.avatar.image(src='/profile_pictures/avatar-icon.svg')
           input.newcomment#hint4(type='text' placeholder='Write a Comment')
           i.big.send.link.icon
 
@@ -224,7 +223,7 @@ block content
         .ui.feed
          .event
            .label
-             img.popupNotificationImage(src=cdn + '/profile_pictures/user39.jpg')
+             img.popupNotificationImage(src='/profile_pictures/user39.jpg')
            .content
              .summary Thomas Rogers commented on Hannah Lee’s post: “I love ribs”.        
 
@@ -236,7 +235,7 @@ block content
        .ui.feed
         .event
           .label
-            img.popupNotificationImage(src=cdn + '/profile_pictures/user39.jpg')
+            img.popupNotificationImage(src='/profile_pictures/user39.jpg')
           .content
             .summary Thomas Rogers commented on Hannah Lee’s post: “I love ribs”.
 

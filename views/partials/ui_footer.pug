@@ -5,6 +5,12 @@
         input(type="checkbox", name="agentCheckbox" id='agentCheckbox')
         label(for='agentCheckbox') is Agent (On/Off)
   .right.menu
+    .item(id="sessionID") Session ID:
     a.item(href='https://socialmediatestdrive.org/terms.html') Terms of Service 
     a.item(href='/privacy') Privacy Policy  
     a.item(href='mailto:socialmediatestdrive@gmail.com') Contact Us
+
+script. 
+  // Set session ID in footer
+  const session_ID = window.sessionStorage.getItem('Session ID');
+  sessionID.innerHTML = "Session ID: " + session_ID;

@@ -1,5 +1,4 @@
 var socket = io();
-const cdn = "https://dhpd030vnpk29.cloudfront.net";
 const postDictionary = {
     post1: "Lana Reed's",
     post2: "Ariel Simon's",
@@ -8,8 +7,25 @@ const postDictionary = {
 };
 let timeout;
 
+// const { Configuration, OpenAIApi } = require("openai");
+
+// const configuration = new Configuration({
+//   apiKey: process.env.OPENAI_API_KEY,
+// });
+// const openai = new OpenAIApi(configuration);
+
+// const response = await openai.createCompletion("text-davinci-001", {
+//   prompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend:",
+//   temperature: 0.5,
+//   max_tokens: 60,
+//   top_p: 1.0,
+//   frequency_penalty: 0.5,
+//   presence_penalty: 0.0,
+//   stop: ["You:"],
+// });
+
 // Socket listening to broadcasts
-socket.on("post comment", function (msg) {
+socket.on("post comment", function(msg) {
     const card = $(".ui.card[postID =" + msg["postID"] + "]");
     let comments = card.find(".ui.comments");
     // no comments area - add it
@@ -19,9 +35,9 @@ socket.on("post comment", function (msg) {
         comments = card.find(".ui.comments");
     }
     if (msg["text"].trim() !== "") {
-        const mess = 
+        const mess =
             `<div class="comment">
-                <a class="avatar"> <img src="${msg["agent"] ? cdn + "/profile_pictures/convo_bot.gif" : cdn + "/profile_pictures/avatar-icon.svg"}"> </a>
+                <a class="avatar"> <img src="${msg["agent"] ? "/profile_pictures/convo_bot.gif" : "/profile_pictures/avatar-icon.svg"}"> </a>
                 <div class="content">
                 <a class="author">${msg["agent"] ? "Conversational AI Agent" : "Guest"}</a>
                 <div class="metadata">
@@ -41,7 +57,7 @@ socket.on("post comment", function (msg) {
     } else {
         $("#removeHidden").hide();
     }
-    const imageHref = cdn + (msg["agent"] ? "/profile_pictures/convo_bot.gif" : "/profile_pictures/avatar-icon.svg");
+    const imageHref = msg["agent"] ? "/profile_pictures/convo_bot.gif" : "/profile_pictures/avatar-icon.svg";
     const text = (msg["agent"] ? "Conversational AI Agent " : "Guest ") + "commented on " + postDictionary[msg["postID"]] + ' post: "' +
         msg["text"] + '".';
     $(".popupNotificationImage").attr("src", imageHref);
@@ -59,10 +75,10 @@ socket.on("post comment", function (msg) {
     }
 
     clearTimeout(timeout);
-    timeout = setTimeout(function () {
+    timeout = setTimeout(function() {
         if ($("#removeHidden").is(':visible')) {
             $("#removeHidden").transition("fade");
-        } else if ($("#removeHiddenMobile").is(':visible')){
+        } else if ($("#removeHiddenMobile").is(':visible')) {
             $("#removeHiddenMobile").transition("fade");
         }
     }, 5000);
@@ -84,7 +100,7 @@ function likePost(e) {
         const label = $(this)
             .closest(".ui.like.button")
             .next("a.ui.basic.red.left.pointing.label.count");
-        label.html(function (i, val) {
+        label.html(function(i, val) {
             return val * 1 - 1;
         });
     } else {
@@ -92,7 +108,7 @@ function likePost(e) {
         // Add red color to like button and increase the displayed like count
         target.closest(".ui.like.button").addClass("red");
         const label = $(this).next("a.ui.basic.red.left.pointing.label.count");
-        label.html(function (i, val) {
+        label.html(function(i, val) {
             return val * 1 + 1;
         });
     }
@@ -130,10 +146,10 @@ function addNewComment(event) {
         comments = card.find(".ui.comments");
     }
     if (text.trim() !== "") {
-        const mess = 
+        const mess =
             `<div class="comment">
                 <a class="avatar"> 
-                    <img src="${$("input[name='agentCheckbox']").is(":checked") ? cdn + "/profile_pictures/convo_bot.gif" : cdn + "/profile_pictures/avatar-icon.svg"}"> 
+                    <img src="${$("input[name='agentCheckbox']").is(":checked") ? "/profile_pictures/convo_bot.gif" : "/profile_pictures/avatar-icon.svg"}"> 
                 </a>
                 <div class="content">
                     <a class="author">${$("input[name='agentCheckbox']").is(":checked") ? "Conversational AI Agent" : "Guest"}</a>
@@ -153,11 +169,18 @@ function addNewComment(event) {
             postID: card.attr("postID"),
             agent: $("input[name='agentCheckbox']").is(":checked") // indicates if comment was made as the convo AI agent
         });
+
+        $.post("/feed", {
+            sessionID: window.sessionStorage.getItem('Session ID'),
+            postID: card.attr("postID"),
+            actor: $("input[name='agentCheckbox']").is(":checked") ? "AI" : "Guest",
+            body: text
+        });
     }
 }
 
 function likeComment(e) {
-    const target = $(event.target);
+    const target = $(e.target);
     // Determine if the comment is being LIKED or UNLIKED based on the initial
     // button color. Red = UNLIKE, Not Red = LIKE.
     if (target.hasClass("red")) {
@@ -168,7 +191,7 @@ function likeComment(e) {
         comment.find("i.heart.icon").removeClass("red");
         // Decrease the like count by 1
         const label = comment.find("span.num");
-        label.html(function (i, val) {
+        label.html(function(i, val) {
             return val * 1 - 1;
         });
     } else {
@@ -179,7 +202,7 @@ function likeComment(e) {
         comment.find("i.heart.icon").addClass("red");
         // Increase the like count by 1
         const label = comment.find("span.num");
-        label.html(function (i, val) {
+        label.html(function(i, val) {
             return val * 1 + 1;
         });
     }
@@ -200,13 +223,13 @@ function flagComment(e) {
 
 $(window).on("load", () => {
     // Focuses cursor to new comment input field, if the "Reply" button is clicked
-    $(".reply.button").click(function () {
+    $(".reply.button").click(function() {
         const parent = $(this).closest(".ui.fluid.card");
         parent.find("input.newcomment").focus();
     });
 
     // Press enter to submit a comment
-    window.addEventListener("keydown", function (event) {
+    window.addEventListener("keydown", function(event) {
         // console.log(event.target);
         if (event.keyCode === 13 && event.target.className == "newcomment") {
             console.log("newCOMMENT")
@@ -231,12 +254,12 @@ $(window).on("load", () => {
     $("a.flag.comment").click(flagComment);
 
     // closes notification by clicking "x"
-    $(".message .close").on("click", function () {
+    $(".message .close").on("click", function() {
         $(this).closest(".message").transition("fade");
     });
 
     // scroll to appropriate post when notification popup is clicked
-    $('.notificationPopup').on('click', function (event) {
+    $('.notificationPopup').on('click', function(event) {
         if ($(event.target).hasClass('close')) {
             return false;
         }

@@ -1,4 +1,3 @@
--var cdn = "https://dhpd030vnpk29.cloudfront.net";
 -var isResearchVersion = process.env.isResearchVersion === 'true';
 -var enableLearnerDashboard = process.env.enableLearnerDashboard === 'true';
 .computer.only.tablet.only.row.testdriveHeaderRow 
@@ -6,7 +5,7 @@
     .ui.grid.container#myheader
         .four.wide.column
           a.item(href='https://socialmediatestdrive.org/modules.html')
-            img.ui.tiny.image(src=cdn+'/finalLogo.png', id='logo')
+            img.ui.tiny.image(src='/finalLogo.svg', id='logo')
         .eight.wide.column
         .four.wide.column
           
@@ -14,7 +13,7 @@
 .mobile.only.row
   .ui.fluid.top.fixed.two.item.menu.testDriveHeader
     a.item(href='/')
-      img.ui.tiny.image(src=cdn+'/finalLogo.png', id='cell_logo')
+      img.ui.tiny.image(src='/finalLogo.svg', id='cell_logo')
     if isResearchVersion
         if user
           //- a.item.newpost.float.right
