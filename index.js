@@ -59,10 +59,11 @@ app.get('/', (req, res) => {
     res.render('home');
 });
 
-app.get('/:sessionID', (req, res) => {
-    console.log(req.params.sessionID);
-    res.render('index');
-});
+// app.get('/:sessionID', (req, res) => {
+//     console.log(req.params.sessionID);
+//     res.render('index');
+// });
+app.get('/:sessionID', scriptController.getScript);
 
 app.post('/feed', scriptController.postComment);
 
@@ -77,7 +78,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('post comment', msg => {
-        console.log(msg);
+        // console.log(msg);
         // io.emit('post comment', msg); // emit to all listening sockets
         socket.broadcast.emit('post comment', msg); // emit to all listening socketes but the one sending
     });

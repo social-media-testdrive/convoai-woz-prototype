@@ -26,6 +26,9 @@ let timeout;
 
 // Socket listening to broadcasts
 socket.on("post comment", function(msg) {
+    if (msg["sessionID"] !== window.location.pathname.split('/')[1]) {
+        return;
+    }
     const card = $(".ui.card[postID =" + msg["postID"] + "]");
     let comments = card.find(".ui.comments");
     // no comments area - add it
@@ -167,13 +170,14 @@ function addNewComment(event) {
         socket.emit("post comment", {
             text: text,
             postID: card.attr("postID"),
+            sessionID: window.location.pathname.split('/')[1],
             agent: $("input[name='agentCheckbox']").is(":checked") // indicates if comment was made as the convo AI agent
         });
 
         $.post("/feed", {
-            sessionID: window.sessionStorage.getItem('Session ID'),
+            sessionID: window.location.pathname.split('/')[1],
             postID: card.attr("postID"),
-            actor: $("input[name='agentCheckbox']").is(":checked") ? "AI" : "Guest",
+            actor: $("input[name='agentCheckbox']").is(":checked") ? "Conversational AI Agent" : "Guest",
             body: text
         });
     }
@@ -232,7 +236,6 @@ $(window).on("load", () => {
     window.addEventListener("keydown", function(event) {
         // console.log(event.target);
         if (event.keyCode === 13 && event.target.className == "newcomment") {
-            console.log("newCOMMENT")
             event.stopImmediatePropagation();
             addNewComment(event);
         }

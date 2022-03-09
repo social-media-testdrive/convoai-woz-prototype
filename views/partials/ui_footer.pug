@@ -12,5 +12,5 @@
 
 script. 
   // Set session ID in footer
-  const session_ID = window.sessionStorage.getItem('Session ID');
+  const session_ID = window.location.pathname.split('/')[1];
   sessionID.innerHTML = "Session ID: " + session_ID;

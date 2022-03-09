@@ -56,6 +56,17 @@ block content
               .actions
                 a.like.comment Like
                 a.flag.comment Flag
+          if script["post1"]
+            each comment in script["post1"]
+              .comment
+                a.avatar
+                  img(src=comment["actor"]=="Guest" ? '/profile_pictures/avatar-icon.svg' : '/profile_pictures/convo_bot.gif')
+                .content
+                  a.author #{comment["actor"]}
+                  .metadata
+                    span.date Yesterday
+                  .text 
+                    | #{comment["body"]}
       .extra.content
         .ui.fluid.left.labeled.right.icon.input
           .ui.label
@@ -112,6 +123,17 @@ block content
               .actions
                 a.like.comment Like
                 a.flag.comment Flag
+          if script["post2"]
+            each comment in script["post2"]
+              .comment
+                a.avatar
+                  img(src=comment["actor"]=="Guest" ? '/profile_pictures/avatar-icon.svg' : '/profile_pictures/convo_bot.gif')
+                .content
+                  a.author #{comment["actor"]}
+                  .metadata
+                    span.date Yesterday
+                  .text 
+                    | #{comment["body"]}
       .extra.content
         .ui.fluid.left.labeled.right.icon.input
           .ui.label
@@ -150,7 +172,20 @@ block content
             .ui.like.button
               i.heart.icon
               | Like
-            a.ui.basic.red.left.pointing.label.count 2        
+            a.ui.basic.red.left.pointing.label.count 2    
+        .content
+          .ui.comments
+            if script["post3"]
+              each comment in script["post3"]
+                .comment
+                  a.avatar
+                    img(src=comment["actor"]=="Guest" ? '/profile_pictures/avatar-icon.svg' : '/profile_pictures/convo_bot.gif')
+                  .content
+                    a.author #{comment["actor"]}
+                    .metadata
+                      span.date Yesterday
+                    .text 
+                      | #{comment["body"]}
         .extra.content
           .ui.fluid.left.labeled.right.icon.input
             .ui.label
@@ -209,6 +244,17 @@ block content
                 a.like.comment Like
                 a.flag.comment Flag
                 a#hint3
+          if script["post4"]
+            each comment in script["post4"]
+              .comment
+                a.avatar
+                  img(src=comment["actor"]=="Guest" ? '/profile_pictures/avatar-icon.svg' : '/profile_pictures/convo_bot.gif')
+                .content
+                  a.author #{comment["actor"]}
+                  .metadata
+                    span.date Yesterday
+                  .text 
+                    | #{comment["body"]}
       .extra.content
         .ui.fluid.left.labeled.right.icon.input
           .ui.label

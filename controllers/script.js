@@ -52,3 +52,27 @@ exports.postComment = (req, res, next) => {
             });
         });
 };
+
+/**
+ * GET /:sessionID: Get the comments logged for the sessionID
+ */
+exports.getScript = (req, res, next) => {
+    Script.findOne({ sessionID: req.params.sessionID })
+        .exec(function(err, script) {
+            if (err) {
+                return next(err);
+            }
+
+            let final_script = {};
+            if (script) {
+                for (const post of script["action"]) {
+                    final_script[post["post_id"]] = post["comments"];
+                }
+            }
+
+            console.log(final_script);
+            res.render('index', {
+                script: final_script
+            });
+        });
+};
