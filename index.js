@@ -6,6 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+var Filter = require('bad-words'); // TBD, about whether or not to use.
 
 /*
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -35,6 +36,7 @@ const port = process.env.PORT || 3000;
  * Controllers (route handlers).
  */
 const scriptController = require('./controllers/script');
+const openaiController = require('./controllers/openai-gpt3')
 
 /**
  * Connect to MongoDB.
@@ -50,6 +52,10 @@ mongoose.connection.on('error', (err) => {
     process.exit();
 });
 
+function isProfane(text) {
+    const filter = new Filter();
+    return (filter.isProfane(text));
+}
 
 /*
  * Primary app routes.
@@ -59,18 +65,11 @@ app.get('/', (req, res) => {
     res.render('home');
 });
 
-// app.get('/:sessionID', (req, res) => {
-//     console.log(req.params.sessionID);
-//     res.render('index');
-// });
 app.get('/:sessionID', scriptController.getScript);
 
 app.post('/feed', scriptController.postComment);
+app.post('/gpt3', openaiController.getResponses);
 
-// demo from socket.io site
-app.get('/demo', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
 
 io.on('connection', (socket) => {
     socket.on('chat message', msg => {
@@ -79,6 +78,7 @@ io.on('connection', (socket) => {
 
     socket.on('post comment', msg => {
         // console.log(msg);
+        msg["isProfane"] = isProfane(msg["text"]);
         // io.emit('post comment', msg); // emit to all listening sockets
         socket.broadcast.emit('post comment', msg); // emit to all listening socketes but the one sending
     });

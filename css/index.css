@@ -7,12 +7,26 @@
 }
 
 #removeHidden,
-#clickAllDotsWarning {
+#removeHiddenMobile {
     display: none;
 }
 
 .img.post img {
     max-width: 100%;
+}
+
+.ui.red.label {
+    display: flex;
+    margin-left: 10px !important;
+}
+
+.ui.label>img.ui.avatar.image {
+    margin-top: 5px;
+    margin-right: 0px !important;
+}
+
+.ui.form {
+    width: 100%;
 }
 
 

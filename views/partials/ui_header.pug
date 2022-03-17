@@ -1,10 +1,8 @@
--var isResearchVersion = process.env.isResearchVersion === 'true';
--var enableLearnerDashboard = process.env.enableLearnerDashboard === 'true';
 .computer.only.tablet.only.row.testdriveHeaderRow 
   .ui.borderless.fixed.menu.testDriveHeader
     .ui.grid.container#myheader
         .four.wide.column
-          a.item(href='https://socialmediatestdrive.org/modules.html')
+          a.item(href='/')
             img.ui.tiny.image(src='/finalLogo.svg', id='logo')
         .eight.wide.column
         .four.wide.column
@@ -14,24 +12,3 @@
   .ui.fluid.top.fixed.two.item.menu.testDriveHeader
     a.item(href='/')
       img.ui.tiny.image(src='/finalLogo.svg', id='cell_logo')
-    if isResearchVersion
-        if user
-          //- a.item.newpost.float.right
-          //-   i.big.plus.icon
-          .item
-            .right.menu.headerDropdownMenu
-              .ui.simple.dropdown.item
-                if isResearchVersion
-                  span= user.username || user.profile.name || user.id
-                else 
-                  span= user.profile.name || user.username || user.id
-                i.dropdown.icon
-                .menu
-                  if user.isInstructor
-                    a.item(href='/classManagement') View Dashboard
-                  if (user.isStudent && enableLearnerDashboard)
-                    a.item(href='/learningAchievement') My Dashboard
-                  a.item(href='/') Module Page
-                  a.item(href='mailto:socialmediatestdrive@gmail.com') Contact Us
-                  a.item(href='/logout') Logout
-          

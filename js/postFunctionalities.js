@@ -1,28 +1,15 @@
 var socket = io();
 const postDictionary = {
-    post1: "Lana Reed's",
-    post2: "Ariel Simon's",
-    post3: "Emma Hanson's",
-    post4: "David Cole's",
+    post1: "Ella Sroni's",
+    post2: "Breana Summers's",
+    post3: "Dylan Moore's",
+    post4: "Keegan Scott's",
+    // post1: "Lana Reed's",
+    // post2: "Ariel Simon's",
+    // post3: "Emma Hanson's",
+    // post4: "David Cole's",
 };
 let timeout;
-
-// const { Configuration, OpenAIApi } = require("openai");
-
-// const configuration = new Configuration({
-//   apiKey: process.env.OPENAI_API_KEY,
-// });
-// const openai = new OpenAIApi(configuration);
-
-// const response = await openai.createCompletion("text-davinci-001", {
-//   prompt: "You: What have you been up to?\nFriend: Watching old movies.\nYou: Did you watch anything interesting?\nFriend:",
-//   temperature: 0.5,
-//   max_tokens: 60,
-//   top_p: 1.0,
-//   frequency_penalty: 0.5,
-//   presence_penalty: 0.0,
-//   stop: ["You:"],
-// });
 
 // Socket listening to broadcasts
 socket.on("post comment", function(msg) {
@@ -46,6 +33,7 @@ socket.on("post comment", function(msg) {
                 <div class="metadata">
                     <span class="date"><1 minute ago</span>
                     <i class="heart icon"></i> 0 Likes
+                    ${!msg["agent"] && $("input[name='agentCheckbox']").is(":checked") && msg["isProfane"] ? "<div class='ui red label'>PROFANE</div>" :""}
                 </div>
                 <div class="text">${msg["text"]}</div>
                 </div>
@@ -88,7 +76,18 @@ socket.on("post comment", function(msg) {
 
     // If is ai bot, and the message was from a user-- scroll to the new comment 
     if (!msg["agent"] && $("input[name='agentCheckbox']").is(":checked")) {
-        $(".ui.card[postID =" + msg["postID"] + "]").find('input.newcomment')[0].scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+        $(".ui.card[postID =" + msg["postID"] + "]").find('textarea.newcomment')[0].scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+
+        // Get GPT-3 Response
+        $.post("/gpt3", {
+            sessionID: window.location.pathname.split('/')[1],
+            postID: card.attr("postID"),
+            text: msg["text"]
+        }).then(function(data) {
+            const comment_area = card.find("textarea.newcomment")
+            comment_area.val(data['choices'][0]['text']);
+            comment_area.focus();
+        });
     }
 });
 
@@ -136,11 +135,8 @@ function flagPost(e) {
 
 function addNewComment(event) {
     let target = $(event.target);
-    if (!target.hasClass("link")) {
-        target = target.siblings(".link");
-    }
-    const text = target.siblings("input.newcomment").val();
     const card = target.parents(".ui.fluid.card");
+    const text = card.find("textarea.newcomment").val();
     let comments = card.find(".ui.comments");
     // no comments area - add it
     if (!comments.length) {
@@ -164,7 +160,7 @@ function addNewComment(event) {
                 </div>
             </div>`;
 
-        target.siblings("input.newcomment").val("");
+        card.find("textarea.newcomment").val("");
         comments.append(mess);
 
         socket.emit("post comment", {
@@ -229,13 +225,13 @@ $(window).on("load", () => {
     // Focuses cursor to new comment input field, if the "Reply" button is clicked
     $(".reply.button").click(function() {
         const parent = $(this).closest(".ui.fluid.card");
-        parent.find("input.newcomment").focus();
+        parent.find("textarea.newcomment").focus();
     });
 
     // Press enter to submit a comment
     window.addEventListener("keydown", function(event) {
-        // console.log(event.target);
-        if (event.keyCode === 13 && event.target.className == "newcomment") {
+        if (!event.ctrlKey && event.key === "Enter" && event.target.className == "newcomment") {
+            event.preventDefault();
             event.stopImmediatePropagation();
             addNewComment(event);
         }
@@ -268,6 +264,6 @@ $(window).on("load", () => {
         }
 
         var relevantPostNumber = $(this).attr('correspondingPost');
-        $(".ui.card[postID =" + relevantPostNumber + "]").find('input.newcomment')[0].scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+        $(".ui.card[postID =" + relevantPostNumber + "]").find('textarea.newcomment')[0].scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
     });
 });

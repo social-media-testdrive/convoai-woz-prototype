@@ -70,7 +70,7 @@ exports.getScript = (req, res, next) => {
                 }
             }
 
-            console.log(final_script);
+            // console.log(final_script);
             res.render('index', {
                 script: final_script
             });
