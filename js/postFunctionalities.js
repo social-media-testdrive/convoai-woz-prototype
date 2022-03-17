@@ -75,7 +75,7 @@ socket.on("post comment", function(msg) {
     }, 5000);
 
     // If is ai bot, and the message was from a user-- scroll to the new comment 
-    if (!msg["agent"] && $("input[name='agentCheckbox']").is(":checked")) {
+    if (!msg["agent"] && $("input[name='isAgentCheckbox']").is(":checked")) {
         $(".ui.card[postID =" + msg["postID"] + "]").find('textarea.newcomment')[0].scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
 
         // Get GPT-3 Response
@@ -148,10 +148,10 @@ function addNewComment(event) {
         const mess =
             `<div class="comment">
                 <a class="avatar"> 
-                    <img src="${$("input[name='agentCheckbox']").is(":checked") ? "/profile_pictures/convo_bot.gif" : "/profile_pictures/avatar-icon.svg"}"> 
+                    <img src="${$("input[name='isAgentCheckbox']").is(":checked") ? "/profile_pictures/convo_bot.gif" : "/profile_pictures/avatar-icon.svg"}"> 
                 </a>
                 <div class="content">
-                    <a class="author">${$("input[name='agentCheckbox']").is(":checked") ? "Conversational AI Agent" : "Guest"}</a>
+                    <a class="author">${$("input[name='isAgentCheckbox']").is(":checked") ? "Conversational AI Agent" : "Guest"}</a>
                     <div class="metadata">
                         <span class="date"><1 minute ago</span>
                         <i class="heart icon"></i> 0 Likes
@@ -167,13 +167,13 @@ function addNewComment(event) {
             text: text,
             postID: card.attr("postID"),
             sessionID: window.location.pathname.split('/')[1],
-            agent: $("input[name='agentCheckbox']").is(":checked") // indicates if comment was made as the convo AI agent
+            agent: $("input[name='isAgentCheckbox']").is(":checked") // indicates if comment was made as the convo AI agent
         });
 
         $.post("/feed", {
             sessionID: window.location.pathname.split('/')[1],
             postID: card.attr("postID"),
-            actor: $("input[name='agentCheckbox']").is(":checked") ? "Conversational AI Agent" : "Guest",
+            actor: $("input[name='isAgentCheckbox']").is(":checked") ? "Conversational AI Agent" : "Guest",
             body: text
         });
     }

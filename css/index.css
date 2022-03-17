@@ -23,6 +23,7 @@
 .ui.label>img.ui.avatar.image {
     margin-top: 5px;
     margin-right: 0px !important;
+    width: 100%;
 }
 
 .ui.form {
