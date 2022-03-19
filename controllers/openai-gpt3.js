@@ -2,7 +2,7 @@ const { Configuration, OpenAIApi } = require("openai");
 // var Filter = require('bad-words');
 
 const configuration = new Configuration({
-    // organization: "org-seRfmk5amlkWpPF9j4Ado6J7",
+    organization: process.env.ORGANIZATION_KEY,
     apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
