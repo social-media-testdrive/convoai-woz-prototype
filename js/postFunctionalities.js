@@ -85,7 +85,7 @@ socket.on("post comment", function(msg) {
             text: msg["text"]
         }).then(function(data) {
             const comment_area = card.find("textarea.newcomment")
-            comment_area.val(data['choices'][0]['text']);
+            comment_area.val(data['choices'][0]['text'].trim());
             comment_area.focus();
         });
     }
