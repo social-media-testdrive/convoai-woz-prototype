@@ -1,4 +1,6 @@
 const { Configuration, OpenAIApi } = require("openai");
+const Script = require('../models/Script.js');
+const helpers = require('./helpers');
 // var Filter = require('bad-words');
 
 const configuration = new Configuration({
@@ -46,6 +48,40 @@ Bot: Awww you are so kind! Dylan is lucky to have you as a friend!
     //     `,
 };
 
+function addGPT3(sessionID, text, output) {
+    Script.findOne({ sessionID: sessionID })
+        .exec(function(err, script) {
+            if (err) {
+                return next(err);
+            }
+
+            // There is no corresponding object for this session ID, so create one
+            if (!script) {
+                script = new Script({
+                    sessionID: sessionID,
+                    action: [],
+                    gpt3_outputs: []
+                });
+            }
+
+            let gpt3_outputs = script.gpt3_outputs;
+
+            // Create a new object
+            let gpt3_output = {
+                text: text,
+                output: output
+            };
+
+            gpt3_outputs.push(gpt3_output);
+
+            script.save((err) => {
+                if (err) {
+                    return next(err);
+                }
+            });
+        });
+}
+
 /**
  * POST /:getResponses: Classify the user's comments as toxic, constructive, or neutral. Then 
  */
@@ -90,6 +126,17 @@ exports.getResponses = async function(req, res, next) {
         presence_penalty: 0.0,
         user: sessionID
     });
+
+    // log GPT3 output to database
+    const postCommentReq = {};
+    postCommentReq.body = {
+        sessionID: sessionID,
+        postID: postID,
+        actor: 'GPT3',
+        body: response["data"]["choices"][0]["text"].trim()
+    }
+    helpers.postComment(postCommentReq, res, next);
+    addGPT3(sessionID, text, response["data"]["choices"][0]["text"].trim());
 
     // console.log(response["data"]);
     res.set({ 'Content-Type': 'application/json; charset=UTF-8' });
