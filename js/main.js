@@ -1,8 +1,6 @@
 function updateNewCommentImage() {
     const isAgent = window.sessionStorage.getItem('isAgent');
     let src = isAgent === "true" ? "/profile_pictures/convo_bot.png" : "/profile_pictures/avatar-icon.svg";
-    console.log(isAgent);
-    console.log(src);
     if (window.location.pathname !== "/") {
         $(".extra.content > .input > .ui.label > img.ui.avatar.image").attr("src", src);
     }

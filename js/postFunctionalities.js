@@ -78,16 +78,19 @@ socket.on("post comment", function(msg) {
     if (!msg["agent"] && $("input[name='isAgentCheckbox']").is(":checked")) {
         $(".ui.card[postID =" + msg["postID"] + "]").find('textarea.newcomment')[0].scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
 
-        // Get GPT-3 Response
-        $.post("/gpt3", {
-            sessionID: window.location.pathname.split('/')[1],
-            postID: card.attr("postID"),
-            text: msg["text"]
-        }).then(function(data) {
-            const comment_area = card.find("textarea.newcomment")
-            comment_area.val(data["choices"][0]["text"].trim());
-            comment_area.focus();
-        });
+        const enableGPT3 = $('meta[name="enableGPT3"]').attr('content') === "true";
+        if (enableGPT3) {
+            // Get GPT-3 Response
+            $.post("/gpt3", {
+                sessionID: window.location.pathname.split('/')[1],
+                postID: card.attr("postID"),
+                text: msg["text"]
+            }).then(function(data) {
+                const comment_area = card.find("textarea.newcomment")
+                comment_area.val(data["choices"][0]["text"].trim());
+                comment_area.focus();
+            });
+        }
     }
 });
 
