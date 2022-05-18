@@ -48,7 +48,7 @@ Bot: Awww you are so kind! Dylan is lucky to have you as a friend!
     //     `,
 };
 
-function addGPT3(sessionID, text, output) {
+function addGPT3(sessionID, text, output, classification) {
     Script.findOne({ sessionID: sessionID })
         .exec(function(err, script) {
             if (err) {
@@ -69,7 +69,8 @@ function addGPT3(sessionID, text, output) {
             // Create a new object
             let gpt3_output = {
                 text: text,
-                output: output
+                output: output,
+                classification: classification
             };
 
             gpt3_outputs.push(gpt3_output);
@@ -136,7 +137,7 @@ exports.getResponses = async function(req, res, next) {
         body: response["data"]["choices"][0]["text"].trim()
     }
     helpers.postComment(postCommentReq, res, next);
-    addGPT3(sessionID, text, response["data"]["choices"][0]["text"].trim());
+    addGPT3(sessionID, text, response["data"]["choices"][0]["text"].trim(), classification["data"]["label"]);
 
     // console.log(response["data"]);
     res.set({ 'Content-Type': 'application/json; charset=UTF-8' });

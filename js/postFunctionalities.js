@@ -25,11 +25,13 @@ socket.on("post comment", function(msg) {
         comments = card.find(".ui.comments");
     }
     if (msg["text"].trim() !== "") {
+        const src = msg["agent"] === "Guest" ? "/profile_pictures/avatar-icon.svg" : actors[msg["agent"]];
+        const name = msg["agent"];
         const mess =
             `<div class="comment">
-                <a class="avatar"> <img src="${msg["agent"] ? "/profile_pictures/convo_bot.gif" : "/profile_pictures/avatar-icon.svg"}"> </a>
+                <a class="avatar"> <img src=${src}> </a>
                 <div class="content">
-                <a class="author">${msg["agent"] ? "Conversational AI Agent" : "Guest"}</a>
+                <a class="author">${name}</a>
                 <div class="metadata">
                     <span class="date"><1 minute ago</span>
                     <i class="heart icon"></i> 0 Likes
@@ -39,57 +41,56 @@ socket.on("post comment", function(msg) {
                 </div>
             </div>`;
         comments.append(mess);
-    }
 
-    // Display a notification:
-    // hide the mobile view popups if not in mobile view anymore
-    if ($(window).width() < 1086) {
-        $("#removeHiddenMobile").hide();
-    } else {
-        $("#removeHidden").hide();
-    }
-    const imageHref = msg["agent"] ? "/profile_pictures/convo_bot.gif" : "/profile_pictures/avatar-icon.svg";
-    const text = (msg["agent"] ? "Conversational AI Agent " : "Guest ") + "commented on " + postDictionary[msg["postID"]] + ' post: "' +
-        msg["text"] + '".';
-    $(".popupNotificationImage").attr("src", imageHref);
-    $(".notificationPopup").attr("correspondingpost", msg["postID"]);
-    $(".ui.fixed.bottom.sticky.notificationPopup .summary").text(text);
-
-    //if in a mobile view, put popup in the middle
-    if ($(window).width() < 1086) {
-        $("#removeHiddenMobile").removeClass("hidden").show();
-        $("#mobilePopup").transition("pulse");
-    } else {
-        //else put popup on the side
-        $("#removeHidden").removeClass("hidden").show();
-        $("#desktopPopup").transition("pulse");
-    }
-
-    clearTimeout(timeout);
-    timeout = setTimeout(function() {
-        if ($("#removeHidden").is(':visible')) {
-            $("#removeHidden").transition("fade");
-        } else if ($("#removeHiddenMobile").is(':visible')) {
-            $("#removeHiddenMobile").transition("fade");
+        // Display a notification:
+        // hide the mobile view popups if not in mobile view anymore
+        if ($(window).width() < 1086) {
+            $("#removeHiddenMobile").hide();
+        } else {
+            $("#removeHidden").hide();
         }
-    }, 5000);
+        const imageHref = src;
+        const text = msg["agent"] + " commented on " + postDictionary[msg["postID"]] + ' post: "' + msg["text"] + '".';
+        $(".popupNotificationImage").attr("src", imageHref);
+        $(".notificationPopup").attr("correspondingpost", msg["postID"]);
+        $(".ui.fixed.bottom.sticky.notificationPopup .summary").text(text);
 
-    // If is ai bot, and the message was from a user-- scroll to the new comment 
-    if (!msg["agent"] && $("input[name='isAgentCheckbox']").is(":checked")) {
-        $(".ui.card[postID =" + msg["postID"] + "]").find('textarea.newcomment')[0].scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+        //if in a mobile view, put popup in the middle
+        if ($(window).width() < 1086) {
+            $("#removeHiddenMobile").removeClass("hidden").show();
+            $("#mobilePopup").transition("pulse");
+        } else {
+            //else put popup on the side
+            $("#removeHidden").removeClass("hidden").show();
+            $("#desktopPopup").transition("pulse");
+        }
 
-        const enableGPT3 = $('meta[name="enableGPT3"]').attr('content') === "true";
-        if (enableGPT3) {
-            // Get GPT-3 Response
-            $.post("/gpt3", {
-                sessionID: window.location.pathname.split('/')[1],
-                postID: card.attr("postID"),
-                text: msg["text"]
-            }).then(function(data) {
-                const comment_area = card.find("textarea.newcomment")
-                comment_area.val(data["choices"][0]["text"].trim());
-                comment_area.focus();
-            });
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+            if ($("#removeHidden").is(':visible')) {
+                $("#removeHidden").transition("fade");
+            } else if ($("#removeHiddenMobile").is(':visible')) {
+                $("#removeHiddenMobile").transition("fade");
+            }
+        }, 5000);
+
+        // If is ai bot, and the message was from a user-- scroll to the new comment 
+        if (msg["agent"] === "Guest" && $("input[name='isAgentCheckbox']").is(":checked")) {
+            $(".ui.card[postID =" + msg["postID"] + "]").find('textarea.newcomment')[0].scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+
+            const enableGPT3 = $('meta[name="enableGPT3"]').attr('content') === "true";
+            if (enableGPT3) {
+                // Get GPT-3 Response
+                $.post("/gpt3", {
+                    sessionID: window.location.pathname.split('/')[1],
+                    postID: card.attr("postID"),
+                    text: msg["text"]
+                }).then(function(data) {
+                    const comment_area = card.find("textarea.newcomment")
+                    comment_area.val(data["choices"][0]["text"].trim());
+                    comment_area.focus();
+                });
+            }
         }
     }
 });
@@ -148,13 +149,19 @@ function addNewComment(event) {
         comments = card.find(".ui.comments");
     }
     if (text.trim() !== "") {
+        const isAgent = $('#isAgentCheckbox input').is(":checked");
+        const agentType = $('#agentTypeDropdown').dropdown('get value');
+
+        const src = !isAgent ? "/profile_pictures/avatar-icon.svg" : actors[agentType];
+        const name = !isAgent ? "Guest" : agentType;
+
         const mess =
             `<div class="comment">
                 <a class="avatar"> 
-                    <img src="${$("input[name='isAgentCheckbox']").is(":checked") ? "/profile_pictures/convo_bot.gif" : "/profile_pictures/avatar-icon.svg"}"> 
+                    <img src=${src}> 
                 </a>
                 <div class="content">
-                    <a class="author">${$("input[name='isAgentCheckbox']").is(":checked") ? "Conversational AI Agent" : "Guest"}</a>
+                    <a class="author">${name}</a>
                     <div class="metadata">
                         <span class="date"><1 minute ago</span>
                         <i class="heart icon"></i> 0 Likes
@@ -170,13 +177,13 @@ function addNewComment(event) {
             text: text,
             postID: card.attr("postID"),
             sessionID: window.location.pathname.split('/')[1],
-            agent: $("input[name='isAgentCheckbox']").is(":checked") // indicates if comment was made as the convo AI agent
+            agent: name // indicates if comment was made as the convo AI agent (used to be a Boolean)
         });
 
         $.post("/feed", {
             sessionID: window.location.pathname.split('/')[1],
             postID: card.attr("postID"),
-            actor: $("input[name='isAgentCheckbox']").is(":checked") ? "Conversational AI Agent" : "Guest",
+            actor: name,
             body: text
         });
     }

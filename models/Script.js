@@ -14,7 +14,8 @@ const scriptSchema = new mongoose.Schema({
     }, { _id: false, versionKey: false })],
     gpt3_outputs: [new Schema({
         text: { type: String, default: '', trim: true },
-        output: { type: String, default: '', trim: true }
+        output: { type: String, default: '', trim: true },
+        classification: { type: String, default: '', trim: true }
     }, { _id: false, versionKey: false })]
 }, { versionKey: false });
 

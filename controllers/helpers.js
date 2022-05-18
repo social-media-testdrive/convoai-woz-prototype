@@ -24,7 +24,7 @@ exports.postComment = (req, res, next) => {
 
             // Find the object for this post
             let feedIndex = _.findIndex(userAction, function(o) {
-                return o.post_id == req.body.postID;
+                return o.post_id === req.body.postID;
             });
 
             // There is no corresponding object for this post, so create one 

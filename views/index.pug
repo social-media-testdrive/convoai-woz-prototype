@@ -2,6 +2,7 @@
 extends ui_layout
 
 block content
+  -const actors = {"Mrs. Warren": "/profile_pictures/teacher.jpg", "Daniel Powers": "/profile_pictures/student.jpg", "Alfred Fluffington": "/profile_pictures/student2.jpg", "Conversational AI Agent": "/profile_pictures/convo_bot.png"}
   .computer.only.tablet.only.four.wide.column 
   #content.eight.wide.computer.ten.wide.tablet.sixteen.wide.mobile.column()       
     //-####################### POST 1 ######################################
@@ -76,7 +77,7 @@ block content
             each comment in script["post1"]
               .comment
                 a.avatar
-                  img(src=comment["actor"]=="Guest" ? '/profile_pictures/avatar-icon.svg' : '/profile_pictures/convo_bot.gif')
+                  img(src=comment["actor"]=="Guest" ? '/profile_pictures/avatar-icon.svg' : actors[comment["actor"]])
                 .content
                   a.author #{comment["actor"]}
                   .metadata
@@ -160,7 +161,7 @@ block content
             each comment in script["post2"]
               .comment
                 a.avatar
-                  img(src=comment["actor"]=="Guest" ? '/profile_pictures/avatar-icon.svg' : '/profile_pictures/convo_bot.gif')
+                  img(src=comment["actor"]=="Guest" ? '/profile_pictures/avatar-icon.svg' : actors[comment["actor"]])
                 .content
                   a.author #{comment["actor"]}
                   .metadata
@@ -214,7 +215,7 @@ block content
               each comment in script["post3"]
                 .comment
                   a.avatar
-                    img(src=comment["actor"]=="Guest" ? '/profile_pictures/avatar-icon.svg' : '/profile_pictures/convo_bot.gif')
+                    img(src=comment["actor"]=="Guest" ? '/profile_pictures/avatar-icon.svg' : actors[comment["actor"]])
                   .content
                     a.author #{comment["actor"]}
                     .metadata
@@ -301,7 +302,7 @@ block content
             each comment in script["post4"]
               .comment
                 a.avatar
-                  img(src=comment["actor"]=="Guest" ? '/profile_pictures/avatar-icon.svg' : '/profile_pictures/convo_bot.gif')
+                  img(src=comment["actor"]=="Guest" ? '/profile_pictures/avatar-icon.svg' : actors[comment["actor"]])
                 .content
                   a.author #{comment["actor"]}
                   .metadata
