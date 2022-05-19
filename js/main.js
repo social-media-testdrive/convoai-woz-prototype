@@ -11,7 +11,7 @@ function updateNewCommentImage() {
 
     const src = (isAgent === 'false') ? "/profile_pictures/avatar-icon.svg" : actors[agentType];
     if (window.location.pathname !== "/") {
-        $(".extra.content > .input > .ui.label > img.ui.avatar.image").attr("src", src);
+        $(".extra.content > .input > .ui.label > img.ui.rounded.image").attr("src", src);
         // $(".extra.content > .input > .ui.label > img.ui.avatar.image").attr("srcset", src);
     }
 }

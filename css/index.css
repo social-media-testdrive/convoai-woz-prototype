@@ -20,10 +20,16 @@
     margin-left: 10px !important;
 }
 
-.ui.label>img.ui.avatar.image {
-    margin-top: 5px;
-    margin-right: 0px !important;
-    width: 100%;
+.ui.label>img.image {
+    width: 2.5em !important;
+    height: auto !important;
+}
+
+.extra.content>.ui.input>.ui.label {
+    padding: 0.5em !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .ui.form {

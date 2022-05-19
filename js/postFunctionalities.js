@@ -9,7 +9,8 @@ const postDictionary = {
     // post3: "Emma Hanson's",
     // post4: "David Cole's",
 };
-let timeout;
+let notification_timeout;
+let typing_timeout;
 
 // Socket listening to broadcasts
 socket.on("post comment", function(msg) {
@@ -25,6 +26,12 @@ socket.on("post comment", function(msg) {
         comments = card.find(".ui.comments");
     }
     if (msg["text"].trim() !== "") {
+        // Clear any animations 
+        if (comments.find(".typing.comment").length !== 0) {
+            $(comments.find(".typing.comment")).slideUp(400, function() { $(this).remove(); });
+        }
+        clearTimeout(typing_timeout);
+
         const src = msg["agent"] === "Guest" ? "/profile_pictures/avatar-icon.svg" : actors[msg["agent"]];
         const name = msg["agent"];
         const mess =
@@ -65,8 +72,8 @@ socket.on("post comment", function(msg) {
             $("#desktopPopup").transition("pulse");
         }
 
-        clearTimeout(timeout);
-        timeout = setTimeout(function() {
+        clearTimeout(notification_timeout);
+        notification_timeout = setTimeout(function() {
             if ($("#removeHidden").is(':visible')) {
                 $("#removeHidden").transition("fade");
             } else if ($("#removeHiddenMobile").is(':visible')) {
@@ -171,7 +178,33 @@ function addNewComment(event) {
             </div>`;
 
         card.find("textarea.newcomment").val("");
-        comments.append(mess);
+        if (comments.find(".typing.comment").length !== 0) {
+            $(mess).insertBefore(".typing.comment");
+        } else {
+            comments.append(mess);
+            // Add Typing Animation 3 seconds after the Guest leaves a comment.
+            if (name === "Guest") {
+                setTimeout(function() {
+                    const typing_mess =
+                        `<div class="typing comment" style="display: none;>     
+                        <div class="content">
+                            <img src="/typing.gif" style="width:40px;height:auto; margin-left: 45px;">
+                            <p style="margin-left: 45px; color: #5d5d5d"> Someone is commenting... </p>
+                        </div>
+                    </div>`;
+                    comments.append(typing_mess);
+                    $(comments.find(".typing.comment")).show('400');
+                }, 2000);
+            }
+        }
+
+        // If after 60 seconds, and the animation is still there, remove it.
+        clearTimeout(typing_timeout);
+        typing_timeout = setTimeout(function() {
+            if (comments.find(".typing.comment").length !== 0) {
+                $(comments.find(".typing.comment")).slideUp(400, function() { $(this).remove(); });
+            }
+        }, 60000);
 
         socket.emit("post comment", {
             text: text,
@@ -276,4 +309,4 @@ $(window).on("load", () => {
         var relevantPostNumber = $(this).attr('correspondingPost');
         $(".ui.card[postID =" + relevantPostNumber + "]").find('textarea.newcomment')[0].scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
     });
-});
+})
