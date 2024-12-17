@@ -11,6 +11,10 @@ It is an early iteration of the final product (which is the [“How to be an Ups
 ## Demo website
 https://convoai-prototype.herokuapp.com/ (OpenAI API is disabled in the demo, but all other functionalities are functional)
 
+
+https://github.com/user-attachments/assets/60b7aa8f-d1f3-4fb1-9f1d-e9948de289ed
+
+
 ## Definitions
 * **Student** The participant of the study (named "Guest" on the platform)
 * **Researcher:** The researcher of the study who acted as the "wizard", adopting multiple fictitious personas (named "Mrs. Warren", "Daniel Powers", "Alfred Fluffington", "Conversational AI Agent" on the platform) depending on the needs expressed by participants. Example, a supportive peer, an educator, etc.
